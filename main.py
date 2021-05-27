@@ -14,11 +14,14 @@ from discord.ext.commands.bot import Bot
 guilds = []
 directory = os.getcwd()
 
+
 def get_prefix(client, message):
-    prefixes = ['*']  # sets the prefixes, you can keep it as an array of only 1 item if you need only one prefix
+    # sets the prefixes, you can keep it as an array of only 1 item if you need only one prefix
+    prefixes = ['*']
 
     if not message.guild:
-        prefixes = ['*']  # Only allow '!' as a prefix when in DMs, this is optional
+        # Only allow '!' as a prefix when in DMs, this is optional
+        prefixes = ['*']
 
     return commands.when_mentioned_or(*prefixes)(client, message)
 
@@ -32,6 +35,7 @@ TOKEN = file1.readlines()
 file1.close()
 TOKEN = " ".join(TOKEN)
 
+
 @bot.event
 async def on_ready():
     print(f'{bot.user} has connected to Discord!')
@@ -41,6 +45,7 @@ async def on_ready():
     print(guilds)
     await bot.change_presence(
         activity=discord.Streaming(name="In Development!", url="https://www.twitch.tv/lindseystirling"))
+
 
 @bot.command(name="join", description="Command to make bot join channel")
 @commands.has_role("Moderator")
@@ -52,7 +57,7 @@ async def join(ctx):
     vc = await stage.connect()
     self_user = bot.user
     member = await ctx.guild.fetch_member(self_user.id)
-    await member.edit(suppress = False)
+    await member.edit(suppress=False)
     played = []
     while True:
         while vc.is_playing():
@@ -70,6 +75,7 @@ async def join(ctx):
             vc.play(discord.FFmpegPCMAudio(f'songs/{tune}'))
             vc.source = discord.PCMVolumeTransformer(vc.source, volume=0.2)
             print(tune)
+
 
 @bot.command(name="close")
 async def close(ctx):
@@ -93,22 +99,28 @@ async def nowplaying(ctx):
         title = audiofile.tag.title
         album = audiofile.tag.album
 
-        embed=discord.Embed(color=0xc0f207)
+        embed = discord.Embed(color=0xc0f207)
         embed.set_author(name="Now Playing ♪")
-        embed.add_field(name="Playing", value=f"{title} - {artist}", inline=False)
+        embed.add_field(
+            name="Playing", value=f"{title} - {artist}", inline=False)
         embed.add_field(name="Album", value=f"{album}", inline=True)
         embed.set_footer(text=f"Requested by {ctx.message.author}")
         if album == "Artemis (Target Edition)":
-            embed.set_thumbnail(url="https://img.discogs.com/cdYjdTx2FgdNZqtIKjrTG_gCNPw=/fit-in/600x526/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-14103238-1579259034-9722.jpeg.jpg")
+            embed.set_thumbnail(
+                url="https://img.discogs.com/cdYjdTx2FgdNZqtIKjrTG_gCNPw=/fit-in/600x526/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-14103238-1579259034-9722.jpeg.jpg")
         if album == "Lindsey Stirling":
-            embed.set_thumbnail(url="https://img.discogs.com/mV563OeKH0SK_9oIoU1IdIEPPd4=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-3914178-1349900850-1613.jpeg.jpg")
+            embed.set_thumbnail(
+                url="https://img.discogs.com/mV563OeKH0SK_9oIoU1IdIEPPd4=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-3914178-1349900850-1613.jpeg.jpg")
         if album == "Brave Enough":
-            embed.set_thumbnail(url="https://img.discogs.com/_UFoJ_k-W0JehnthOuq875r_7ek=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-8936283-1471815599-1562.jpeg.jpg")
+            embed.set_thumbnail(
+                url="https://img.discogs.com/_UFoJ_k-W0JehnthOuq875r_7ek=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-8936283-1471815599-1562.jpeg.jpg")
         if album == "Warmer In The Winter (Deluxe Version)":
-            embed.set_thumbnail(url="https://img.discogs.com/GSBuSi2FPtijB-89u3vqsY8IAgE=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-11052129-1537201543-1109.png.jpg")
+            embed.set_thumbnail(
+                url="https://img.discogs.com/GSBuSi2FPtijB-89u3vqsY8IAgE=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-11052129-1537201543-1109.png.jpg")
         if album == "Shatter Me":
-            embed.set_thumbnail(url="https://img.discogs.com/_3WLRJz00FgHM1bJXD_VIliftwk=/fit-in/600x586/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-5673193-1586641990-8024.jpeg.jpg")
-        
+            embed.set_thumbnail(
+                url="https://img.discogs.com/_3WLRJz00FgHM1bJXD_VIliftwk=/fit-in/600x586/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-5673193-1586641990-8024.jpeg.jpg")
+
         await ctx.send(embed=embed)
 
 bot.run(TOKEN, bot=True, reconnect=True)
