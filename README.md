@@ -2,7 +2,7 @@
 Disclaimer: This Project was originally made to suit the needs of a single server, at the moment, some tweaks will be required to make it work for yours
 
 [![Python version](https://img.shields.io/badge/python-3.9-blue.svg)](https://python.org)
-![Packagist Stars](https://img.shields.io/packagist/stars/BritishBenji/StageMusicBot)
+![GitHub Repo stars](https://img.shields.io/github/stars/BritishBenji/StageMusicBot)
 ![GitHub last commit](https://img.shields.io/github/last-commit/BritishBenji/StageMusicBot)
 
 This bot is made to sit in a Stage Channel, and play music from your local machine 24/7, simple as that!
