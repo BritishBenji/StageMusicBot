@@ -1,6 +1,5 @@
 # Radio Stirling Bot - https://discord.gg/lindseystirling
 import asyncio
-import datetime
 import json
 import os
 import random
@@ -44,8 +43,6 @@ async def on_ready():
         async for guild in bot.fetch_guilds(limit=5):
             guilds.append(guild.name)
     print(guilds)
-    await bot.change_presence(
-        activity=discord.Streaming(name="In Development!", url="https://www.twitch.tv/lindseystirling"))
 
 
 @bot.command(name="join", description="Command to make bot join channel")
@@ -74,6 +71,10 @@ async def join(ctx):
                 played.append(tune)
                 repeated = False
             vc.play(discord.FFmpegPCMAudio(f'songs/{tune}'))
+            audiofile = eyed3.load(f"songs/{tune}")
+            title = audiofile.tag.title
+            await bot.change_presence(
+                activity=discord.Game(name=f"{title}"))
             vc.source = discord.PCMVolumeTransformer(vc.source, volume=0.2)
             print(tune)
 
@@ -99,14 +100,13 @@ async def nowplaying(ctx):
         artist = audiofile.tag.artist
         title = audiofile.tag.title
         album = audiofile.tag.album
-        now = datetime.datetime.now()
-        embed = discord.Embed(color=0xc0f207, timestamp=now.strftime("%d %b %y - %X"))
+        embed = discord.Embed(color=0xc0f207)
         embed.set_author(name="Now Playing ♪", icon_url=ctx.guild.icon_url)
         embed.add_field(
             name="Playing", value=f"{title} - {artist}", inline=False)
         if album != None:
             embed.add_field(name="Album", value=f"{album}", inline=True)
-        embed.set_footer(text=f"Requested by {ctx.message.author} \t This bot is still in development, if you have any queries, please contact the owner")
+        embed.set_footer(text=f"Requested by {ctx.message.author} \t\n This bot is still in development, if you have any queries, please contact the owner")
         if album == "Artemis (Target Edition)":
             embed.set_thumbnail(
                 url="https://img.discogs.com/cdYjdTx2FgdNZqtIKjrTG_gCNPw=/fit-in/600x526/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-14103238-1579259034-9722.jpeg.jpg")
