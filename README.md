@@ -35,4 +35,4 @@ The Activity URL can be changed to point to your Twitch account (check correct a
 To import your songs, it's simple! Put all your music into a folder called `songs` in the same directory as the program, and it'll automatically read them from there! (Please note, the "now playing" command reads from ID3 tags, so these will need to be filled out for that command to pull information)
 
 ## Contributing
-Pull requests are welcome, please ensure they target the TEST branch, as that's the branch that I'll be personally updating before pushing to the main one. For major changes, please open an issue first to discuss what you would like to change.
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
