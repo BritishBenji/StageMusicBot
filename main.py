@@ -20,7 +20,7 @@ def get_prefix(client, message):
     prefixes = ['*']
 
     if not message.guild:
-        # Only allow '!' as a prefix when in DMs, this is optional
+        # Only allow '*' as a prefix when in DMs, this is optional
         prefixes = ['*']
 
     return commands.when_mentioned_or(*prefixes)(client, message)
@@ -30,9 +30,8 @@ bot = commands.Bot(command_prefix=get_prefix, description="A Music Bot to play L
                    case_insensitive=True, help_command=None)
 
 # collect token here
-file1 = open(f"{directory}\\Token.txt", "r")
-TOKEN = file1.readlines()
-file1.close()
+with open(f"{directory}\\Token.txt", "r") as file1:
+    TOKEN = file1.readlines()
 TOKEN = " ".join(TOKEN)
 
 
@@ -106,7 +105,7 @@ async def nowplaying(ctx):
             name="Playing", value=f"{title} - {artist}", inline=False)
         if album != None:
             embed.add_field(name="Album", value=f"{album}", inline=True)
-        embed.set_footer(text=f"Requested by {ctx.message.author} \t\n This bot is still in development, if you have any queries, please contact the owner")
+        embed.set_footer(text=f"Requested by {ctx.message.author} \t\nThis bot is still in development, if you have any queries, please contact the owner")
         if album == "Artemis (Target Edition)":
             embed.set_thumbnail(
                 url="https://img.discogs.com/cdYjdTx2FgdNZqtIKjrTG_gCNPw=/fit-in/600x526/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-14103238-1579259034-9722.jpeg.jpg")
