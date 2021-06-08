@@ -29,8 +29,7 @@ Make a file called `Token.txt` - In this file, paste your bot token taken from h
 
 ### Edit `main.py` - 
 
-Here, you can replace anything labeled with "Radio Striling", Line 48 can be changed so that it directs itself to whatever you have named your Stage Channel.
-The Activity URL can be changed to point to your Twitch account (check correct availabilty [here](https://discordpy.readthedocs.io/en/stable/api.html?highlight=activity#activity)
+Here, you can replace anything labeled with "Radio Striling", and even change the links in the last few lines to point towards album art you want.
 
 ### Import your songs
 
