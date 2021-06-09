@@ -6,6 +6,7 @@ import random
 import time
 
 import discord
+from discord.ext.commands.errors import CommandInvokeError
 import eyed3
 from discord import AudioSource, FFmpegPCMAudio, PCMVolumeTransformer
 from discord.ext import commands
@@ -17,7 +18,7 @@ directory = os.getcwd()
 
 def get_prefix(client, message):
     # sets the prefixes, you can keep it as an array of only 1 item if you need only one prefix
-    prefixes = ['*']
+    prefixes = ['£']
 
     if not message.guild:
         # Only allow '*' as a prefix when in DMs, this is optional
@@ -51,10 +52,13 @@ async def join(ctx):
     channel = stage.name
     global vc
     global tune
-    vc = await stage.connect()
-    self_user = bot.user
-    member = await ctx.guild.fetch_member(self_user.id)
-    await member.edit(suppress=False)
+    try:
+        vc = await stage.connect()
+        self_user = bot.user
+        member = await ctx.guild.fetch_member(self_user.id)
+        await member.edit(suppress=False)
+    except CommandInvokeError:
+        pass
     played = []
     while True:
         while vc.is_playing():
@@ -75,7 +79,11 @@ async def join(ctx):
             await bot.change_presence(
                 activity=discord.Game(name=f"{title}"))
             vc.source = discord.PCMVolumeTransformer(vc.source, volume=0.2)
-            print(tune)
+            if "suppress=False" in str(stage.voice_states):
+                pass
+            else:
+                await member.edit(suppress=False)
+            
 
 
 @bot.command(name="close")
