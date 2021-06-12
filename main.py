@@ -18,7 +18,7 @@ directory = os.getcwd()
 
 def get_prefix(client, message):
     # sets the prefixes, you can keep it as an array of only 1 item if you need only one prefix
-    prefixes = ['£']
+    prefixes = ['*']
 
     if not message.guild:
         # Only allow '*' as a prefix when in DMs, this is optional
