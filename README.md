@@ -1,5 +1,5 @@
 # StageMusicBot
-Disclaimer: This Project was originally made to suit the needs of a single server, at the moment, some tweaks will be required to make it work for yours
+Disclaimer: This version of the bot was only tested on Linux, running with PM2 and restarts with a 6 hour CronoJob. It may not be suitable for normal use.
 
 [![Python version](https://img.shields.io/badge/python-3.9-blue.svg)](https://python.org)
 ![GitHub Repo stars](https://img.shields.io/github/stars/BritishBenji/StageMusicBot)
