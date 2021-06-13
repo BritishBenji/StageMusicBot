@@ -11,7 +11,7 @@ This bot is made to sit in a Stage Channel, and play music from your local machi
 
 ## How to Install: 
 
-Please try to follow these instructions first, if find that there is something you are unsure on, feel free to contact me on Discord (`BritishBenji#6321`) or open an issue, and I'll be more than happy to help.
+Please try to follow these instructions first, if find that there is something you are unsure on, feel free to contact me on Discord (https://discord.gg/qBq2WSsgvv) or open an issue, and I'll be more than happy to help.
 
 There are a few requirements needed before you can run this bot, run the command below to install these pre-requisits:
 
