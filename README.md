@@ -33,7 +33,7 @@ To configure your bot, make a copy of `config.json.example`, and fill in the inf
 - `guild_id` = Currently not required
 - `stage_name` = The name of the stage channel you wish for the bot to join. **NOTE: this is CaSe sensitive**
 - `now_playing` = The text channel ID's of channels you want to allow users to run the `now playing` command in
-- `mod_role` = The name of the role you wish to allow to run `join` or `close`. **NOTE: this is CaSe sensitive **
+- `mod_role` = The name of the role you wish to allow to run `join` or `close`. **NOTE: this is CaSe sensitive**
 
 ### Edit `main.py` - 
 
