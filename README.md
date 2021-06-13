@@ -31,15 +31,15 @@ To configure your bot, make a copy of `config.json.example`, and fill in the inf
 - `token` = Your bot token from https://discord.com/developers/applications
 - `prefix` = Your chosen bot prefix for both
 - `guild_id` = Currently not required
-- `stage_name` = The name of the stage channel you wish for the bot to join. NOTE: this is CaSe sensitive
+- `stage_name` = The name of the stage channel you wish for the bot to join. **NOTE: this is CaSe sensitive**
 - `now_playing` = The text channel ID's of channels you want to allow users to run the `now playing` command in
-- `mod_role` = The name of the role you wish to allow to run `join` or `close`. NOTE: this is CaSe sensitive 
+- `mod_role` = The name of the role you wish to allow to run `join` or `close`. **NOTE: this is CaSe sensitive **
 
 ### Edit `main.py` - 
 
 The only reason to currently edit `main.py` is to either allow your bot to show specific album art (see the last few lines), or to make edits/improvements to the program itself.
 
-LINUX USERS:
+**LINUX USERS:**
 
 You may need to edit `main.py` to fit your operating system's directories. *(This may just be a case of swapping backslashes for forward slashes in certain cases)*
 
