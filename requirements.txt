@@ -1,0 +1,3 @@
+discord
+discord[voice]
+eyed3

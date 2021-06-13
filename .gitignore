@@ -1,4 +1,5 @@
 # Custom User-Added Files
-songs/
+*.mp3
 Token.txt
+config.json
 

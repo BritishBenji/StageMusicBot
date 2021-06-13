@@ -13,23 +13,35 @@ This bot is made to sit in a Stage Channel, and play music from your local machi
 
 Please try to follow these instructions first, if find that there is something you are unsure on, feel free to contact me on Discord (`BritishBenji#6321`) or open an issue, and I'll be more than happy to help.
 
-There are a few requirements needed before you can run this bot, run the commands below to install these pre-requisits:
-```py
-pip install discord
-pip install discord[voice]
-pip install eyed3
+There are a few requirements needed before you can run this bot, run the command below to install these pre-requisits:
+
+Windows:
+```
+py -m pip install -r requirements.txt
+```
+Linux:
+```
+python3 -m pip install -r requirements.txt
 ```
 After that, you're good to begin configuration!
 
 ## Configuration
-At the moment, configuring the bot is a little harder than it should be, I didn't make this to be shifted from server to server easily.
-But, should you wish to configure it yourself:
+To configure your bot, make a copy of `config.json.example`, and fill in the information there.
 
-Make a file called `Token.txt` - In this file, paste your bot token taken from https://discord.com/developers/applications
+- `token` = Your bot token from https://discord.com/developers/applications
+- `prefix` = Your chosen bot prefix for both
+- `guild_id` = Currently not required
+- `stage_name` = The name of the stage channel you wish for the bot to join. NOTE: this is CaSe sensitive
+- `now_playing` = The text channel ID's of channels you want to allow users to run the `now playing` command in
+- `mod_role` = The name of the role you wish to allow to run `join` or `close`. NOTE: this is CaSe sensitive 
 
 ### Edit `main.py` - 
 
-Here, you can replace anything labeled with "Radio Striling", and even change the links in the last few lines to point towards album art you want.
+The only reason to currently edit `main.py` is to either allow your bot to show specific album art (see the last few lines), or to make edits/improvements to the program itself.
+
+LINUX USERS:
+
+You may need to edit `main.py` to fit your operating system's directories. *(This may just be a case of swapping backslashes for forward slashes in certain cases)*
 
 ### Import your songs
 

@@ -15,14 +15,17 @@ from discord.ext.commands.bot import Bot
 guilds = []
 directory = os.getcwd()
 
+# collect token here#
+with open('./config.json', 'r') as cjson:
+    config = json.load(cjson)
 
 def get_prefix(client, message):
     # sets the prefixes, you can keep it as an array of only 1 item if you need only one prefix
-    prefixes = ['*']
+    prefixes = [config["prefix"]]
 
     if not message.guild:
         # Only allow '*' as a prefix when in DMs, this is optional
-        prefixes = ['*']
+        prefixes = [config["prefix"]]
 
     return commands.when_mentioned_or(*prefixes)(client, message)
 
@@ -30,10 +33,7 @@ def get_prefix(client, message):
 bot = commands.Bot(command_prefix=get_prefix, description="A Music Bot to play Lindsey Stirling's amazing music, 24/7, just for you!",
                    case_insensitive=True, help_command=None)
 
-# collect token here
-with open(f"{directory}\\Token.txt", "r") as file1:
-    TOKEN = file1.readlines()
-TOKEN = " ".join(TOKEN)
+TOKEN = config["token"]
 
 
 @bot.event
@@ -46,9 +46,9 @@ async def on_ready():
 
 
 @bot.command(name="join", description="Command to make bot join channel")
-@commands.has_role("Moderator")
+@commands.has_role(config["mod_role"])
 async def join(ctx):
-    stage = discord.utils.get(ctx.guild.channels, name="Radio Stirling")
+    stage = discord.utils.get(ctx.guild.channels, name=config["stage_name"])
     channel = stage.name
     global vc
     global tune
@@ -94,8 +94,7 @@ async def close(ctx):
 
 @bot.command(name="nowplaying", description="Command to check what song is currently playing", aliases=['np'])
 async def nowplaying(ctx):
-    channels = [816534865343807488, 844729715477446687]
-    if ctx.channel.id not in channels:
+    if ctx.channel.id not in config["now_playing"]:
         return
     try:
         if not vc.is_playing():

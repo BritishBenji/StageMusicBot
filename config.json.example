@@ -1,0 +1,14 @@
+{
+    "token":"",
+
+    "prefix":"*",
+
+    "guild_id":"",
+
+    "stage_name":"",
+
+    "now_playing":[],
+
+    "mod_role":""
+
+}
