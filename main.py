@@ -106,7 +106,7 @@ async def nowplaying(ctx):
         title = audiofile.tag.title
         album = audiofile.tag.album
         embed = discord.Embed(color=0xc0f207)
-        embed.set_author(name="Now Playing â™ª", icon_url=ctx.guild.icon_url)
+        embed.set_author(name="Now Playing Ã¢â„¢Âª", icon_url=ctx.guild.icon_url)
         embed.add_field(
             name="Playing", value=f"{title} - {artist}", inline=False)
         if album != None:
