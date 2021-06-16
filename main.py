@@ -54,7 +54,7 @@ async def on_ready():
     try:
         vc = await stage.connect()
         self_user = bot.user
-        member = guild.get_member(853638592785285120)
+        member = guild.get_member(config["bot_id"])
         await member.edit(suppress=False)
     except CommandInvokeError:
         pass
