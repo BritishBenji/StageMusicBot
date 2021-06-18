@@ -1,3 +1,4 @@
 discord
 discord[voice]
 eyed3
+PyNaCl

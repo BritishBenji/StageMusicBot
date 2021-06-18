@@ -95,16 +95,16 @@ async def close(ctx):
 async def nowplaying(ctx):
     try:
         if not vc.is_playing():
-            await ctx.send("I need to play something first")
+            await ctx.reply("I need to play something first")
     except:
-        await ctx.send("I need to play something first")
+        await ctx.reply("I need to play something first")
     else:
         audiofile = eyed3.load(f"songs/{tune}")
         artist = audiofile.tag.artist
         title = audiofile.tag.title
         album = audiofile.tag.album
         embed = discord.Embed(color=0xc0f207)
-        embed.set_author(name="Now Playing Ã¢â„¢Âª", icon_url=ctx.guild.icon_url)
+        embed.set_author(name="Now Playing 🎶", icon_url=ctx.guild.icon_url)
         embed.add_field(
             name="Playing", value=f"{title} - {artist}", inline=False)
         if album != None:
@@ -126,6 +126,6 @@ async def nowplaying(ctx):
             embed.set_thumbnail(
                 url="https://img.discogs.com/_3WLRJz00FgHM1bJXD_VIliftwk=/fit-in/600x586/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-5673193-1586641990-8024.jpeg.jpg")
 
-        await ctx.send(embed=embed)
+        await ctx.reply(embed=embed)
 
 bot.run(TOKEN, bot=True, reconnect=True)
