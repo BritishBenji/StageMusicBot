@@ -43,19 +43,18 @@ async def on_ready():
         async for guild in bot.fetch_guilds(limit=5):
             guilds.append(guild.name)
     print(guilds)
-
-
-@bot.command(name="join", description="Command to make bot join channel")
-@commands.has_role(config["mod_role"])
-async def join(ctx):
-    stage = discord.utils.get(ctx.guild.channels, name=config["stage_name"])
+    text_channel_list = []
+    for guild in bot.guilds:
+        for channel in guild.stage_channels:
+            text_channel_list.append(channel)
+    stage = discord.utils.get(text_channel_list, name=config["stage_name"])
     channel = stage.name
     global vc
     global tune
     try:
         vc = await stage.connect()
         self_user = bot.user
-        member = await ctx.guild.fetch_member(self_user.id)
+        member = guild.get_member(config["bot_id"])
         await member.edit(suppress=False)
     except CommandInvokeError:
         pass
@@ -107,7 +106,7 @@ async def nowplaying(ctx):
         title = audiofile.tag.title
         album = audiofile.tag.album
         embed = discord.Embed(color=0xc0f207)
-        embed.set_author(name="Now Playing ♪", icon_url=ctx.guild.icon_url)
+        embed.set_author(name="Now Playing Ã¢â„¢Âª", icon_url=ctx.guild.icon_url)
         embed.add_field(
             name="Playing", value=f"{title} - {artist}", inline=False)
         if album != None:
