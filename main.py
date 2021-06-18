@@ -93,8 +93,6 @@ async def close(ctx):
 
 @bot.command(name="nowplaying", description="Command to check what song is currently playing", aliases=['np'])
 async def nowplaying(ctx):
-    if ctx.channel.id not in config["now_playing"]:
-        return
     try:
         if not vc.is_playing():
             await ctx.send("I need to play something first")

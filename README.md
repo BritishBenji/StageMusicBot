@@ -1,13 +1,10 @@
 # StageMusicBot
-Disclaimer: This version of the bot was only tested on Linux, running with PM2 and restarts with a 6 hour CronoJob. It may not be suitable for normal use.
 
 [![Python version](https://img.shields.io/badge/python-3.9-blue.svg)](https://python.org)
 ![GitHub Repo stars](https://img.shields.io/github/stars/BritishBenji/StageMusicBot)
 ![GitHub last commit](https://img.shields.io/github/last-commit/BritishBenji/StageMusicBot)
 
 This bot is made to sit in a Stage Channel, and play music from your local machine 24/7, simple as that!
-
-
 
 ## How to Install: 
 
@@ -30,9 +27,8 @@ To configure your bot, make a copy of `config.json.example`, and fill in the inf
 
 - `token` = Your bot token from https://discord.com/developers/applications
 - `prefix` = Your chosen bot prefix for both
-- `guild_id` = Currently not required
+- `bot_id` = The USER_ID of your bot
 - `stage_name` = The name of the stage channel you wish for the bot to join. **NOTE: this is CaSe sensitive**
-- `now_playing` = The text channel ID's of channels you want to allow users to run the `now playing` command in
 - `mod_role` = The name of the role you wish to allow to run `join` or `close`. **NOTE: this is CaSe sensitive**
 
 ### Edit `main.py` - 

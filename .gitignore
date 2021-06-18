@@ -2,4 +2,5 @@
 *.mp3
 Token.txt
 config.json
+/.vscode
 
