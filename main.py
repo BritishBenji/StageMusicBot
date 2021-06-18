@@ -1,4 +1,4 @@
-# Radio Stirling Bot - https://discord.gg/lindseystirling
+# StageMusicBot - https://discord.gg/qBq2WSsgvv
 import asyncio
 import json
 import os
