@@ -113,7 +113,7 @@ async def nowplaying(ctx):
         embed.set_author(name="Now Playing 🎶", icon_url=ctx.guild.icon_url)\
             .add_field(
             name="Playing", value=f"{title} - {artist}", inline=False)\
-            .set_footer(text=f"Requested by {ctx.message.author} \t\nThis bot is still in development, if you have any queries, please contact the owner")
+            .set_footer(text=f"This bot is still in development, if you have any queries, please contact the owner", icon_url=(ctx.message.author.avatar_url))
         if album is not None:
             embed.add_field(name="Album", value=f"{album}", inline=True)
             if albumart is not None:
