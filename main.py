@@ -6,11 +6,11 @@ import random
 import time
 
 import discord
-from discord.ext.commands.errors import CommandInvokeError
 import eyed3
 from discord import AudioSource, FFmpegPCMAudio, PCMVolumeTransformer
 from discord.ext import commands
 from discord.ext.commands.bot import Bot
+from discord.ext.commands.errors import CommandInvokeError
 
 guilds = []
 directory = os.getcwd()
@@ -18,6 +18,11 @@ directory = os.getcwd()
 # collect token here#
 with open('./config.json', 'r') as cjson:
     config = json.load(cjson)
+
+if os.path.exists("./albumart.json") == True:
+    with open('./albumart.json', 'r') as cjson:
+        albumart = json.load(cjson)
+
 
 def get_prefix(client, message):
     # sets the prefixes, you can keep it as an array of only 1 item if you need only one prefix
@@ -38,6 +43,9 @@ TOKEN = config["token"]
 
 @bot.event
 async def on_ready():
+    if os.path.exists("./songs") == False:
+        print("Unable to find \"songs\" directory. Please ensure there is a \"songs\" directory present at the same level as this file")
+        return
     print(f'{bot.user} has connected to Discord!')
     while len(guilds) < 1:
         async for guild in bot.fetch_guilds(limit=5):
@@ -77,12 +85,11 @@ async def on_ready():
             title = audiofile.tag.title
             await bot.change_presence(
                 activity=discord.Game(name=f"{title}"))
-            vc.source = discord.PCMVolumeTransformer(vc.source, volume=0.2)
+            vc.source = discord.PCMVolumeTransformer(vc.source, volume=config["volume"])
             if "suppress=False" in str(stage.voice_states):
                 pass
             else:
                 await member.edit(suppress=False)
-            
 
 
 @bot.command(name="close")
@@ -104,28 +111,20 @@ async def nowplaying(ctx):
         title = audiofile.tag.title
         album = audiofile.tag.album
         embed = discord.Embed(color=0xc0f207)
-        embed.set_author(name="Now Playing 🎶", icon_url=ctx.guild.icon_url)
-        embed.add_field(
-            name="Playing", value=f"{title} - {artist}", inline=False)
+        embed.set_author(name="Now Playing 🎶", icon_url=ctx.guild.icon_url)\
+            .add_field(
+            name="Playing", value=f"{title} - {artist}", inline=False)\
+            .set_footer(text=f"Requested by {ctx.message.author} \t\nThis bot is still in development, if you have any queries, please contact the owner")
         if album != None:
             embed.add_field(name="Album", value=f"{album}", inline=True)
-        embed.set_footer(text=f"Requested by {ctx.message.author} \t\nThis bot is still in development, if you have any queries, please contact the owner")
-        if album == "Artemis (Target Edition)":
-            embed.set_thumbnail(
-                url="https://img.discogs.com/cdYjdTx2FgdNZqtIKjrTG_gCNPw=/fit-in/600x526/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-14103238-1579259034-9722.jpeg.jpg")
-        if album == "Lindsey Stirling":
-            embed.set_thumbnail(
-                url="https://img.discogs.com/mV563OeKH0SK_9oIoU1IdIEPPd4=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-3914178-1349900850-1613.jpeg.jpg")
-        if album == "Brave Enough":
-            embed.set_thumbnail(
-                url="https://img.discogs.com/_UFoJ_k-W0JehnthOuq875r_7ek=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-8936283-1471815599-1562.jpeg.jpg")
-        if album == "Warmer In The Winter (Deluxe Version)":
-            embed.set_thumbnail(
-                url="https://img.discogs.com/GSBuSi2FPtijB-89u3vqsY8IAgE=/fit-in/600x600/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-11052129-1537201543-1109.png.jpg")
-        if album == "Shatter Me":
-            embed.set_thumbnail(
-                url="https://img.discogs.com/_3WLRJz00FgHM1bJXD_VIliftwk=/fit-in/600x586/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-5673193-1586641990-8024.jpeg.jpg")
-
+            if albumart != None:
+                try:
+                    embed.set_thumbnail(url=albumart[album])
+                except KeyError:
+                    print(albumart)
+                    pass
+        else:
+            pass
         await ctx.reply(embed=embed)
 
 bot.run(TOKEN, bot=True, reconnect=True)

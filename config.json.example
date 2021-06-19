@@ -7,6 +7,8 @@
 
     "stage_name":"",
 
-    "mod_role":""
+    "mod_role":"",
+
+    "volume":0.2
 
 }

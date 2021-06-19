@@ -31,10 +31,18 @@ To configure your bot, make a copy of `config.json.example`, and fill in the inf
 - `bot_id` = The USER_ID of your bot
 - `stage_name` = The name of the stage channel you wish for the bot to join. **NOTE: this is CaSe sensitive**
 - `mod_role` = The name of the role you wish to allow to run `join` or `close`. **NOTE: this is CaSe sensitive**
+- `volume` = The volume that the bot will play at (from 0 - 1 as a float/decimal), **NOTE: It's at 0.2 by default for a reason, anything above that REALLY hurt**
+
+To further configure your bot (optional) make a copy of `albumart.json.example`, and fill in the information with the supplied ones as a guide:
+
+```json
+{
+    "album_name":"Link to album art",
+    "album_name":"Link to album art"
+}
+```
 
 ### Edit `main.py` - 
-
-The only reason to currently edit `main.py` is to either allow your bot to show specific album art (see the last few lines), or to make edits/improvements to the program itself.
 
 **LINUX USERS:**
 
