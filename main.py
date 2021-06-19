@@ -19,7 +19,7 @@ directory = os.getcwd()
 with open('./config.json', 'r') as cjson:
     config = json.load(cjson)
 
-if os.path.exists("./albumart.json") == True:
+if os.path.exists("./albumart.json"):
     with open('./albumart.json', 'r') as cjson:
         albumart = json.load(cjson)
 
@@ -43,7 +43,7 @@ TOKEN = config["token"]
 
 @bot.event
 async def on_ready():
-    if os.path.exists("./songs") == False:
+    if not os.path.exists("./songs"):
         print("Unable to find \"songs\" directory. Please ensure there is a \"songs\" directory present at the same level as this file")
         return
     print(f'{bot.user} has connected to Discord!')
@@ -57,35 +57,34 @@ async def on_ready():
             text_channel_list.append(channel)
     stage = discord.utils.get(text_channel_list, name=config["stage_name"])
     channel = stage.name
-    global vc
-    global tune
+    global Vc
+    global Tune
     try:
-        vc = await stage.connect()
-        self_user = bot.user
+        Vc = await stage.connect()
         member = guild.get_member(config["bot_id"])
         await member.edit(suppress=False)
     except CommandInvokeError:
         pass
     played = []
     while True:
-        while vc.is_playing():
+        while Vc.is_playing():
             await asyncio.sleep(1)
         else:
             repeated = True
             while repeated:
                 if len(played) > 20:
                     played = []
-                tune = random.choice(os.listdir("songs/"))
-                while tune in played:
-                    tune = random.choice(os.listdir("songs/"))
-                played.append(tune)
+                Tune = random.choice(os.listdir("songs/"))
+                while Tune in played:
+                    Tune = random.choice(os.listdir("songs/"))
+                played.append(Tune)
                 repeated = False
-            vc.play(discord.FFmpegPCMAudio(f'songs/{tune}'))
-            audiofile = eyed3.load(f"songs/{tune}")
+            Vc.play(discord.FFmpegPCMAudio(f'songs/{Tune}'))
+            audiofile = eyed3.load(f"songs/{Tune}")
             title = audiofile.tag.title
             await bot.change_presence(
                 activity=discord.Game(name=f"{title}"))
-            vc.source = discord.PCMVolumeTransformer(vc.source, volume=config["volume"])
+            Vc.source = discord.PCMVolumeTransformer(Vc.source, volume=config["volume"])
             if "suppress=False" in str(stage.voice_states):
                 pass
             else:
@@ -93,7 +92,7 @@ async def on_ready():
 
 
 @bot.command(name="close")
-async def close(ctx):
+async def close():
     await bot.close()
     print("is ded")
 
@@ -101,12 +100,12 @@ async def close(ctx):
 @bot.command(name="nowplaying", description="Command to check what song is currently playing", aliases=['np'])
 async def nowplaying(ctx):
     try:
-        if not vc.is_playing():
+        if not Vc.is_playing():
             await ctx.reply("I need to play something first")
     except:
         await ctx.reply("I need to play something first")
     else:
-        audiofile = eyed3.load(f"songs/{tune}")
+        audiofile = eyed3.load(f"songs/{Tune}")
         artist = audiofile.tag.artist
         title = audiofile.tag.title
         album = audiofile.tag.album
@@ -115,9 +114,9 @@ async def nowplaying(ctx):
             .add_field(
             name="Playing", value=f"{title} - {artist}", inline=False)\
             .set_footer(text=f"Requested by {ctx.message.author} \t\nThis bot is still in development, if you have any queries, please contact the owner")
-        if album != None:
+        if album is not None:
             embed.add_field(name="Album", value=f"{album}", inline=True)
-            if albumart != None:
+            if albumart is not None:
                 try:
                     embed.set_thumbnail(url=albumart[album])
                 except KeyError:
