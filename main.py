@@ -85,7 +85,7 @@ async def on_ready():
             title = audiofile.tag.title
             await bot.change_presence(
                 activity=discord.Game(name=f"{title}"))
-            vc.source = discord.PCMVolumeTransformer(vc.source, volume=0.2)
+            vc.source = discord.PCMVolumeTransformer(vc.source, volume=config["volume"])
             if "suppress=False" in str(stage.voice_states):
                 pass
             else:
