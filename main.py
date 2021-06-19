@@ -34,6 +34,32 @@ def get_prefix(client, message):
 
     return commands.when_mentioned_or(*prefixes)(client, message)
 
+def write_song():
+    if not os.path.exists("./songs.txt"):
+        f = open("songs.txt", "x")
+        f.close()
+    # If all songs played
+    with open("songs.txt") as f:
+        x = len(f.readlines())
+    if x == len(os.listdir("songs/")):
+        f = open("songs.txt", "w+")
+        f.close()
+    # Add song to list
+    with open("songs.txt", "a+") as File:
+        File.seek(0)
+        played = File.readlines()
+        if len(played) == 0:
+            Tune = random.choice(os.listdir("songs/"))
+            File.write(f'{Tune}\n')
+            return Tune
+        Tune = random.choice(os.listdir("songs/"))
+        while f"{Tune}\n" in played:
+            Tune = random.choice(os.listdir("songs/"))
+        File.write(f'{Tune}\n')
+        return Tune
+
+
+
 
 bot = commands.Bot(command_prefix=get_prefix, description="A Music Bot to play Lindsey Stirling's amazing music, 24/7, just for you!",
                    case_insensitive=True, help_command=None)
@@ -65,20 +91,11 @@ async def on_ready():
         await member.edit(suppress=False)
     except CommandInvokeError:
         pass
-    played = []
     while True:
         while Vc.is_playing():
             await asyncio.sleep(1)
         else:
-            repeated = True
-            while repeated:
-                if len(played) > 20:
-                    played = []
-                Tune = random.choice(os.listdir("songs/"))
-                while Tune in played:
-                    Tune = random.choice(os.listdir("songs/"))
-                played.append(Tune)
-                repeated = False
+            Tune = write_song()
             Vc.play(discord.FFmpegPCMAudio(f'songs/{Tune}'))
             audiofile = eyed3.load(f"songs/{Tune}")
             title = audiofile.tag.title
