@@ -109,7 +109,7 @@ async def on_ready():
 
 
 @bot.command(name="close")
-async def close():
+async def close(ctx):
     await bot.close()
     print("is ded")
 
