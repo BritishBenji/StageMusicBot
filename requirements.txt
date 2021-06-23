@@ -1,4 +1,4 @@
 discord.py ~= 1.7.3
-discord[voice] ~=1.0.1
+discord[voice] ~=1.7.3
 eyed3 ~= 0.9.6
 PyNaCl ~= 1.4.0
