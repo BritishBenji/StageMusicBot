@@ -8,6 +8,7 @@ import time
 import discord
 import eyed3
 from discord import AudioSource, FFmpegPCMAudio, PCMVolumeTransformer
+from discord_slash import SlashCommand, SlashContext
 from discord.ext import commands
 from discord.ext.commands.bot import Bot
 from discord.ext.commands.errors import CommandInvokeError
@@ -62,10 +63,9 @@ def write_song():
 
 
 bot = commands.Bot(command_prefix=get_prefix, description="A Music Bot to play Lindsey Stirling's amazing music, 24/7, just for you!",
-                   case_insensitive=True, help_command=None)
-
+                   case_insensitive=True, help_command=None, intents=discord.Intents.all())
+slash = SlashCommand(bot, sync_commands=True)
 TOKEN = config["token"]
-
 
 @bot.event
 async def on_ready():
@@ -113,6 +113,36 @@ async def close(ctx):
     await bot.close()
     print("is ded")
 
+@slash.slash(name="nowplaying", description="Command to check what song is currently playing", guild_ids=[667833869734641717])
+async def nowplaying(ctx):
+    try:
+        if not Vc.is_playing():
+            await ctx.reply("I need to play something first")
+    except:
+        await ctx.reply("I need to play something first")
+    else:
+        audiofile = eyed3.load(f"songs/{Tune}")
+        artist = audiofile.tag.artist
+        title = audiofile.tag.title
+        album = audiofile.tag.album
+        embed = discord.Embed(color=0xc0f207)
+        embed.set_author(name="Now Playing 🎶", icon_url=ctx.guild.icon_url)\
+            .add_field(
+            name="Playing", value=f"{title} - {artist}", inline=False)\
+            .set_footer(text="This bot is still in development, if you have any queries, please contact the owner", icon_url=(ctx.author.avatar_url))
+        
+        if album is not None:
+            embed.add_field(name="Album", value=f"{album}", inline=True)
+            if albumart is not None:
+                try:
+                    embed.set_thumbnail(url=albumart[album])
+                except KeyError:
+                    pass
+        else:
+            pass
+        
+        await ctx.send(embed=embed)
+
 
 @bot.command(name="nowplaying", description="Command to check what song is currently playing", aliases=['np'])
 async def nowplaying(ctx):
@@ -137,7 +167,6 @@ async def nowplaying(ctx):
                 try:
                     embed.set_thumbnail(url=albumart[album])
                 except KeyError:
-                    print(albumart)
                     pass
         else:
             pass
