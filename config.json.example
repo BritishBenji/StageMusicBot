@@ -9,6 +9,8 @@
 
     "mod_role":"",
 
-    "volume":0.2
+    "volume":0.2,
+
+    "guild_ids":[]
 
 }

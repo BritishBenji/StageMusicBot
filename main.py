@@ -113,12 +113,12 @@ async def close(ctx):
     await bot.close()
     print("is ded")
 
-@slash.slash(name="nowplaying", description="Command to check what song is currently playing", guild_ids=[667833869734641717])
+@slash.slash(name="nowplaying", description="Command to check what song is currently playing", guild_ids=config["guild_ids"])
 async def nowplaying(ctx):
     try:
         if not Vc.is_playing():
             await ctx.reply("I need to play something first")
-    except:
+    except: 
         await ctx.reply("I need to play something first")
     else:
         audiofile = eyed3.load(f"songs/{Tune}")
