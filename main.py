@@ -109,6 +109,7 @@ async def on_ready():
 
 
 @bot.command(name="close")
+@commands.has_role(config["mod_role"])
 async def close(ctx):
     await bot.close()
     print("is ded")
