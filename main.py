@@ -22,11 +22,11 @@ guilds = []
 directory = os.getcwd()
 
 # collect token here#
-with open('./config.json', 'r') as cjson:
+with open("./config.json", "r") as cjson:
     config = json.load(cjson)
 
 if os.path.exists("./albumart.json"):
-    with open('./albumart.json', 'r') as cjson:
+    with open("./albumart.json", "r") as cjson:
         albumart = json.load(cjson)
 
 
@@ -41,18 +41,26 @@ def get_prefix(client, message):
     return commands.when_mentioned_or(*prefixes)(client, message)
 
 
-bot = commands.Bot(command_prefix=get_prefix, description="A Music Bot to play Lindsey Stirling's amazing music, 24/7, just for you!",
-                   case_insensitive=True, help_command=None, intents=discord.Intents.all())
+bot = commands.Bot(
+    command_prefix=get_prefix,
+    description="A Music Bot to play Lindsey Stirling's amazing music, 24/7, just for you!",
+    case_insensitive=True,
+    help_command=None,
+    intents=discord.Intents.all(),
+)
 slash = SlashCommand(bot, sync_commands=True)
 TOKEN = config["token"]
+
 
 @bot.event
 async def on_ready():
     global save_guild
     if not os.path.exists("./songs"):
-        logging.WARNING("Unable to find \"songs\" directory. Please ensure there is a \"songs\" directory present at the same level as this file")
+        logging.WARNING(
+            'Unable to find "songs" directory. Please ensure there is a "songs" directory present at the same level as this file'
+        )
         return
-    logging.warning(f'{bot.user} has connected to Discord!')
+    logging.warning(f"{bot.user} has connected to Discord!")
     while len(guilds) < 1:
         async for guild in bot.fetch_guilds(limit=5):
             save_guild = guild
@@ -76,11 +84,10 @@ async def on_ready():
             await asyncio.sleep(1)
         else:
             Tune = get_info.write_song()
-            Vc.play(discord.FFmpegPCMAudio(f'songs/{Tune}'))
+            Vc.play(discord.FFmpegPCMAudio(f"songs/{Tune}"))
             audiofile = eyed3.load(f"songs/{Tune}")
             title = audiofile.tag.title
-            await bot.change_presence(
-                activity=discord.Game(name=f"{title}"))
+            await bot.change_presence(activity=discord.Game(name=f"{title}"))
             Vc.source = discord.PCMVolumeTransformer(Vc.source, volume=config["volume"])
             if "suppress=False" in str(stage.voice_states):
                 pass
@@ -95,20 +102,27 @@ async def close(ctx):
     logging.shutdown()
     await bot.close()
 
-@slash.slash(name="nowplaying", description="Command to check what song is currently playing", guild_ids=config["guild_ids"])
+
+@slash.slash(
+    name="nowplaying",
+    description="Command to check what song is currently playing",
+    guild_ids=config["guild_ids"],
+)
 async def nowplaying(ctx):
     try:
         if not Vc.is_playing():
             await ctx.reply("I need to play something first")
-    except: 
+    except:
         await ctx.reply("I need to play something first")
     else:
         song_info = get_info.info(Tune)
-        embed = discord.Embed(color=0xc0f207)
-        embed.set_author(name="Now Playing 🎶", icon_url=ctx.guild.icon_url)\
-            .add_field(
-            name="Playing", value=f"{song_info[1]} - {song_info[0]}", inline=False)\
-            .set_footer(text="This bot is still in development, if you have any queries, please contact the owner", icon_url=(ctx.author.avatar_url))
+        embed = discord.Embed(color=0xC0F207)
+        embed.set_author(name="Now Playing 🎶", icon_url=ctx.guild.icon_url).add_field(
+            name="Playing", value=f"{song_info[1]} - {song_info[0]}", inline=False
+        ).set_footer(
+            text="This bot is still in development, if you have any queries, please contact the owner",
+            icon_url=(ctx.author.avatar_url),
+        )
         if song_info[2] is not None:
             embed.add_field(name="Album", value=f"{song_info[2]}", inline=True)
             if albumart is not None:
@@ -119,11 +133,15 @@ async def nowplaying(ctx):
                     pass
         else:
             pass
-        
+
         await ctx.send(embed=embed)
 
 
-@bot.command(name="nowplaying", description="Command to check what song is currently playing", aliases=['np'])
+@bot.command(
+    name="nowplaying",
+    description="Command to check what song is currently playing",
+    aliases=["np"],
+)
 async def nowplaying(ctx):
     try:
         if not Vc.is_playing():
@@ -132,11 +150,13 @@ async def nowplaying(ctx):
         await ctx.reply("I need to play something first")
     else:
         song_info = get_info.info(Tune)
-        embed = discord.Embed(color=0xc0f207)
-        embed.set_author(name="Now Playing 🎶", icon_url=ctx.guild.icon_url)\
-            .add_field(
-            name="Playing", value=f"{song_info[1]} - {song_info[0]}", inline=False)\
-            .set_footer(text="This bot is still in development, if you have any queries, please contact the owner", icon_url=(ctx.message.author.avatar_url))
+        embed = discord.Embed(color=0xC0F207)
+        embed.set_author(name="Now Playing 🎶", icon_url=ctx.guild.icon_url).add_field(
+            name="Playing", value=f"{song_info[1]} - {song_info[0]}", inline=False
+        ).set_footer(
+            text="This bot is still in development, if you have any queries, please contact the owner",
+            icon_url=(ctx.message.author.avatar_url),
+        )
         if song_info[2] is not None:
             embed.add_field(name="Album", value=f"{song_info[2]}", inline=True)
             if albumart is not None:
@@ -149,13 +169,17 @@ async def nowplaying(ctx):
             pass
         await ctx.reply(embed=embed)
 
+
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, ClientException):
         logging.warning(f"{error} - Bot closed due to disconnect")
         bot.close()
     if isinstance(error, UnicodeEncodeError):
-        logging.warning(f"{error} - Bot has been muted whilst playing {Tune}, unmuting now")
+        logging.warning(
+            f"{error} - Bot has been muted whilst playing {Tune}, unmuting now"
+        )
         await bot.edit(mute=False)
+
 
 bot.run(TOKEN, bot=True, reconnect=True)
