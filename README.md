@@ -5,6 +5,7 @@
 ![GitHub Repo stars](https://img.shields.io/github/stars/BritishBenji/StageMusicBot)
 ![GitHub last commit](https://img.shields.io/github/last-commit/BritishBenji/StageMusicBot)
 ![Code Grade](https://www.code-inspector.com/project/23983/status/svg)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![wakatime](https://wakatime.com/badge/github/BritishBenji/StageMusicBot.svg)](https://wakatime.com/badge/github/BritishBenji/StageMusicBot)
 
 This bot is made to sit in a Stage Channel, and play music from your local machine 24/7, simple as that!
