@@ -46,6 +46,9 @@ To further configure your bot (optional) make a copy of `albumart.json.example`,
 }
 ```
 
+**WHEN INVITING THE BOT**
+Ensure the bot has both `bot` scopes AND `applications.commands` scopes to ensure that slash commands work correctly
+
 ### Edit `main.py` - 
 
 **LINUX USERS:**
