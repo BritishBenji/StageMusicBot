@@ -2,6 +2,8 @@
 import asyncio
 import json
 import logging
+from keep_alive import keep_alive
+#PyNaCl#
 import os
 import random
 import time
@@ -13,17 +15,15 @@ from discord.ext import commands, tasks
 from discord.ext.commands.bot import Bot
 from discord.ext.commands.errors import CommandInvokeError
 from discord_slash import SlashCommand, SlashContext
-from src import get_info
-import src
+
+
 
 logging.basicConfig(level=logging.WARNING, filename="main.log", filemode="w")
 
 guilds = []
 directory = os.getcwd()
 
-# collect token here#
-with open("./config.json", "r") as cjson:
-    config = json.load(cjson)
+
 
 if os.path.exists("./albumart.json"):
     with open("./albumart.json", "r") as cjson:
@@ -32,11 +32,11 @@ if os.path.exists("./albumart.json"):
 
 def get_prefix(client, message):
     # sets the prefixes, you can keep it as an array of only 1 item if you need only one prefix
-    prefixes = [config["prefix"]]
+    prefixes = [os.getenv["prefix"]]
 
     if not message.guild:
         # Only allow set prefix as a prefix when in DMs, this is optional
-        prefixes = [config["prefix"]]
+        prefixes = [os.getenv["prefix"]]
 
     return commands.when_mentioned_or(*prefixes)(client, message)
 
@@ -49,7 +49,7 @@ bot = commands.Bot(
     intents=discord.Intents.all(),
 )
 slash = SlashCommand(bot, sync_commands=True)
-TOKEN = config["token"]
+
 
 
 @bot.event
@@ -69,7 +69,7 @@ async def on_ready():
     for guild in bot.guilds:
         for channel in guild.stage_channels:
             text_channel_list.append(channel)
-    stage = discord.utils.get(text_channel_list, name=config["stage_name"])
+    stage = discord.utils.get(text_channel_list, name=(os.getenv["stage_name"]))
     channel = stage.name
     global Vc
     global Tune
@@ -96,7 +96,7 @@ async def on_ready():
 
 
 @bot.command(name="close")
-@commands.has_role(config["mod_role"])
+@commands.has_role(os.getenv("mod_role"))
 async def close(ctx):
     logging.warning("Shutting down via command")
     logging.shutdown()
@@ -106,7 +106,7 @@ async def close(ctx):
 @slash.slash(
     name="nowplaying",
     description="Command to check what song is currently playing",
-    guild_ids=config["guild_ids"],
+    guild_ids=(os.getenv("guilds_id")),
 )
 async def nowplaying(ctx):
     try:
@@ -182,4 +182,8 @@ async def on_command_error(ctx, error):
         await bot.edit(mute=False)
 
 
-bot.run(TOKEN, bot=True, reconnect=True)
+
+
+
+keep_alive()
+bot.run(os.getenv("token"), bot=True, reconnect=True)
