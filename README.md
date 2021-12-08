@@ -24,20 +24,29 @@ Linux:
 ```
 python3 -m pip install -r requirements.txt
 ```
+Replit Console:
+```
+pip install --upgrade pip
+pip install -r requirements.txt
+pip install -U discord.py[voice]
+```
+
 After that, you're good to begin configuration!
 
 ## Configuration
 To configure your bot, make a copy of `config.json.example`, and fill in the information there.
 
-- `token` = Your bot token from https://discord.com/developers/applications
-- `prefix` = Your chosen bot prefix for both
 - `bot_id` = The USER_ID of your bot
-- `stage_name` = The name of the stage channel you wish for the bot to join. **NOTE: this is CaSe sensitive**
-- `mod_role` = The name of the role you wish to allow to run `join` or `close`. **NOTE: this is CaSe sensitive**
 - `volume` = The volume that the bot will play at (from 0 - 1 as a float/decimal), **NOTE: It's at 0.2 by default for a reason, anything above that REALLY hurt**
-- `guild_ids` = The ID of the server your bot is running in, I know it's a list, but it just needs to be an INT in the list (Bot only runs in 1 server at this moment in time
 
 To further configure your bot (optional) make a copy of `albumart.json.example`, and fill in the information with the supplied ones as a guide:
+
+## Environment
+- `token` = Your bot token from https://discord.com/developers/applications
+- `prefix` = Your chosen bot prefix for both
+- `stage_name` = The name of the stage channel you wish for the bot to join. **NOTE: this is CaSe sensitive**
+- `mod_role` = The name of the role you wish to allow to run `join` or `close`. **NOTE: this is CaSe sensitive**
+- `guild_ids` = The ID of the server your bot is running in, I know it's a list, but it just needs to be an INT in the list (Bot only runs in 1 server at this moment in time
 
 ```json
 {
@@ -45,9 +54,6 @@ To further configure your bot (optional) make a copy of `albumart.json.example`,
     "album_name":"Link to album art"
 }
 ```
-
-**WHEN INVITING THE BOT**
-Ensure the bot has both `bot` scopes AND `applications.commands` scopes to ensure that slash commands work correctly
 
 ### Edit `main.py` - 
 
