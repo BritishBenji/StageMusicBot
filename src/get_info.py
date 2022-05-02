@@ -8,7 +8,10 @@ def info(Tune):
     audiofile = EasyID3(f"songs/{Tune}")
     artist = audiofile["artist"][0]
     title = audiofile["title"][0]
-    album = audiofile["album"][0]
+    try:
+        album = audiofile["album"][0]
+    except KeyError:
+        album = None
     return [artist, title, album]
 
 
