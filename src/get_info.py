@@ -1,14 +1,14 @@
 from discord.ext import commands
-import eyed3
+from mutagen.easyid3 import EasyID3
 import random
 import os
 
 
 def info(Tune):
-    audiofile = eyed3.load(f"songs/{Tune}")
-    artist = audiofile.tag.artist
-    title = audiofile.tag.title
-    album = audiofile.tag.album
+    audiofile = EasyID3(f"songs/{Tune}")
+    artist = audiofile["artist"][0]
+    title = audiofile["title"][0]
+    album = audiofile["album"][0]
     return [artist, title, album]
 
 
