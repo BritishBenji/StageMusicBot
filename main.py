@@ -3,53 +3,28 @@ import asyncio
 import json
 import logging
 import os
-import random
-import time
 import discord
-from discord.errors import ClientException
-import eyed3
-from discord import AudioSource, FFmpegPCMAudio, PCMVolumeTransformer, VoiceClient
-from discord.ext import commands, tasks
-from discord.ext.commands.bot import Bot
+from mutagen.easyid3 import EasyID3
+from discord.ext import commands
 from discord.ext.commands.errors import CommandInvokeError
-from discord_slash import SlashCommand, SlashContext
 from src import get_info
-import src
+import config
 
 logging.basicConfig(level=logging.WARNING, filename="main.log", filemode="w")
 
 guilds = []
 directory = os.getcwd()
 
-# collect token here#
-with open("./config.json", "r") as cjson:
-    config = json.load(cjson)
-
 if os.path.exists("./albumart.json"):
     with open("./albumart.json", "r") as cjson:
         albumart = json.load(cjson)
-
-
-def get_prefix(client, message):
-    # sets the prefixes, you can keep it as an array of only 1 item if you need only one prefix
-    prefixes = [config["prefix"]]
-
-    if not message.guild:
-        # Only allow set prefix as a prefix when in DMs, this is optional
-        prefixes = [config["prefix"]]
-
-    return commands.when_mentioned_or(*prefixes)(client, message)
-
+else:
+    albumart = None
 
 bot = commands.Bot(
-    command_prefix=get_prefix,
-    description="A Music Bot to play Lindsey Stirling's amazing music, 24/7, just for you!",
-    case_insensitive=True,
-    help_command=None,
+    command_prefix=commands.when_mentioned_or(config.PREFIX),
     intents=discord.Intents.all(),
 )
-slash = SlashCommand(bot, sync_commands=True)
-TOKEN = config["token"]
 
 
 @bot.event
@@ -69,13 +44,13 @@ async def on_ready():
     for guild in bot.guilds:
         for channel in guild.stage_channels:
             text_channel_list.append(channel)
-    stage = discord.utils.get(text_channel_list, name=config["stage_name"])
+    stage = discord.utils.get(text_channel_list, name=config.STAGENAME)
     channel = stage.name
     global Vc
     global Tune
     try:
         Vc = await stage.connect()
-        member = guild.get_member(config["bot_id"])
+        member = guild.me
         await member.edit(suppress=False)
     except CommandInvokeError:
         pass
@@ -85,10 +60,10 @@ async def on_ready():
         else:
             Tune = get_info.write_song()
             Vc.play(discord.FFmpegPCMAudio(f"songs/{Tune}"))
-            audiofile = eyed3.load(f"songs/{Tune}")
-            title = audiofile.tag.title
+            audiofile = EasyID3(f"songs/{Tune}")
+            title = audiofile["title"][0]
             await bot.change_presence(activity=discord.Game(name=f"{title}"))
-            Vc.source = discord.PCMVolumeTransformer(Vc.source, volume=config["volume"])
+            Vc.source = discord.PCMVolumeTransformer(Vc.source, volume=config.VOLUME)
             if "suppress=False" in str(stage.voice_states):
                 pass
             else:
@@ -96,45 +71,10 @@ async def on_ready():
 
 
 @bot.command(name="close")
-@commands.has_role(config["mod_role"])
 async def close(ctx):
     logging.warning("Shutting down via command")
     logging.shutdown()
     await bot.close()
-
-
-@slash.slash(
-    name="nowplaying",
-    description="Command to check what song is currently playing",
-    guild_ids=config["guild_ids"],
-)
-async def nowplaying(ctx):
-    try:
-        if not Vc.is_playing():
-            await ctx.reply("I need to play something first")
-    except:
-        await ctx.reply("I need to play something first")
-    else:
-        song_info = get_info.info(Tune)
-        embed = discord.Embed(color=0xC0F207)
-        embed.set_author(name="Now Playing 🎶", icon_url=ctx.guild.icon_url).add_field(
-            name="Playing", value=f"{song_info[1]} - {song_info[0]}", inline=False
-        ).set_footer(
-            text="This bot is still in development, if you have any queries, please contact the owner",
-            icon_url=(ctx.author.avatar_url),
-        )
-        if song_info[2] is not None:
-            embed.add_field(name="Album", value=f"{song_info[2]}", inline=True)
-            if albumart is not None:
-                try:
-                    embed.set_thumbnail(url=albumart[song_info[2]])
-                except KeyError:
-                    logging.warning("No Albumart found")
-                    pass
-        else:
-            pass
-
-        await ctx.send(embed=embed)
 
 
 @bot.command(
@@ -151,11 +91,11 @@ async def nowplaying(ctx):
     else:
         song_info = get_info.info(Tune)
         embed = discord.Embed(color=0xC0F207)
-        embed.set_author(name="Now Playing 🎶", icon_url=ctx.guild.icon_url).add_field(
+        embed.set_author(name="Now Playing 🎶", icon_url=ctx.guild.icon.url).add_field(
             name="Playing", value=f"{song_info[1]} - {song_info[0]}", inline=False
         ).set_footer(
             text="This bot is still in development, if you have any queries, please contact the owner",
-            icon_url=(ctx.message.author.avatar_url),
+            icon_url=(ctx.message.author.avatar.url),
         )
         if song_info[2] is not None:
             embed.add_field(name="Album", value=f"{song_info[2]}", inline=True)
@@ -170,16 +110,4 @@ async def nowplaying(ctx):
         await ctx.reply(embed=embed)
 
 
-@bot.event
-async def on_command_error(ctx, error):
-    if isinstance(error, ClientException):
-        logging.warning(f"{error} - Bot closed due to disconnect")
-        bot.close()
-    if isinstance(error, UnicodeEncodeError):
-        logging.warning(
-            f"{error} - Bot has been muted whilst playing {Tune}, unmuting now"
-        )
-        await bot.edit(mute=False)
-
-
-bot.run(TOKEN, bot=True, reconnect=True)
+bot.run(config.TOKEN, reconnect=True)

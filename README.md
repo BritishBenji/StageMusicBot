@@ -1,10 +1,8 @@
 # StageMusicBot
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/E1E850NVO)
 [![Python version](https://img.shields.io/badge/python-3.9-blue.svg)](https://python.org)
 ![GitHub Repo stars](https://img.shields.io/github/stars/BritishBenji/StageMusicBot)
 ![GitHub last commit](https://img.shields.io/github/last-commit/BritishBenji/StageMusicBot)
-![Code Grade](https://www.code-inspector.com/project/23983/status/svg)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![wakatime](https://wakatime.com/badge/github/BritishBenji/StageMusicBot.svg)](https://wakatime.com/badge/github/BritishBenji/StageMusicBot)
 
@@ -27,10 +25,10 @@ python3 -m pip install -r requirements.txt
 After that, you're good to begin configuration!
 
 ## Configuration
-To configure your bot, make a copy of `config.json.example`, and fill in the information there.
+To configure your bot fill in the information in `config.py`
 
 - `token` = Your bot token from https://discord.com/developers/applications
-- `prefix` = Your chosen bot prefix for both
+- `prefix` = Your chosen bot prefix
 - `bot_id` = The USER_ID of your bot
 - `stage_name` = The name of the stage channel you wish for the bot to join. **NOTE: this is CaSe sensitive**
 - `mod_role` = The name of the role you wish to allow to run `join` or `close`. **NOTE: this is CaSe sensitive**
@@ -47,7 +45,7 @@ To further configure your bot (optional) make a copy of `albumart.json.example`,
 ```
 
 **WHEN INVITING THE BOT**
-Ensure the bot has both `bot` scopes AND `applications.commands` scopes to ensure that slash commands work correctly
+Ensure the bot has both `bot` scopes AND all [Privileged Gateway Intents](https://discord.com/developers/docs/topics/gateway#gateway-intents)
 
 ### Edit `main.py` - 
 
@@ -57,7 +55,7 @@ You may need to edit `main.py` to fit your operating system's directories. *(Thi
 
 ### Import your songs
 
-To import your songs, it's simple! Put all your music into a folder called `songs` in the same directory as the program, and it'll automatically read them from there! (Please note, the "now playing" command reads from ID3 tags, so these will need to be filled out for that command to pull information)
+To import your songs, it's simple! Put all your music into a folder called `songs` in the same directory as the program, and it'll automatically read them from there! (Please note, the "now playing" command reads from ID3 tags, so these will need to be filled out for that command to pull information. I suggest using [mutagen](https://mutagen.readthedocs.io/) for this)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
