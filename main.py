@@ -60,6 +60,7 @@ async def on_ready():
         else:
             Tune = get_info.write_song()
             Vc.play(discord.FFmpegPCMAudio(f"songs/{Tune}"))
+            Vc.cleanup()
             audiofile = EasyID3(f"songs/{Tune}")
             title = audiofile["title"][0]
             await bot.change_presence(activity=discord.Game(name=f"{title}"))
