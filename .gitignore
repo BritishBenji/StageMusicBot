@@ -7,4 +7,4 @@ songs.txt
 /.vscode
 *.pyc
 main.log
-.env
+*.env
