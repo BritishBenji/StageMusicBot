@@ -22,20 +22,28 @@ Linux:
 ```
 python3 -m pip install -r requirements.txt
 ```
+Replit Console:
+```
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
 After that, you're good to begin configuration!
 
 ## Configuration
-To configure your bot fill in the information in `config.py`
+To configure your bot, make a copy of `config.json.example`, and fill in the information there.
 
-- `token` = Your bot token from https://discord.com/developers/applications
-- `prefix` = Your chosen bot prefix
-- `bot_id` = The USER_ID of your bot
-- `stage_name` = The name of the stage channel you wish for the bot to join. **NOTE: this is CaSe sensitive**
-- `mod_role` = The name of the role you wish to allow to run `join` or `close`. **NOTE: this is CaSe sensitive**
+- `botid` = The USER_ID of your bot
 - `volume` = The volume that the bot will play at (from 0 - 1 as a float/decimal), **NOTE: It's at 0.2 by default for a reason, anything above that REALLY hurt**
-- `guild_ids` = The ID of the server your bot is running in, I know it's a list, but it just needs to be an INT in the list (Bot only runs in 1 server at this moment in time
+- `stagename` = The name of the stage channel you wish for the bot to join. **NOTE: this is CaSe sensitive**
+- `prefix` = Your chosen bot prefix for both
 
 To further configure your bot (optional) make a copy of `albumart.json.example`, and fill in the information with the supplied ones as a guide:
+
+## Environment
+- `TOKEN` = Your bot token from https://discord.com/developers/applications
+- `MOD_ROLE` = The name of the role you wish to allow to run `join` or `close`. **NOTE: this is CaSe sensitive**
+- `GUILD_IDS` = The ID of the server your bot is running in, I know it's a list, but it just needs to be an INT in the list (Bot only runs in 1 server at this moment in time
 
 ```json
 {
@@ -43,9 +51,6 @@ To further configure your bot (optional) make a copy of `albumart.json.example`,
     "album_name":"Link to album art"
 }
 ```
-
-**WHEN INVITING THE BOT**
-Ensure the bot has both `bot` scopes AND all [Privileged Gateway Intents](https://discord.com/developers/docs/topics/gateway#gateway-intents)
 
 ### Edit `main.py` - 
 
@@ -55,7 +60,7 @@ You may need to edit `main.py` to fit your operating system's directories. *(Thi
 
 ### Import your songs
 
-To import your songs, it's simple! Put all your music into a folder called `songs` in the same directory as the program, and it'll automatically read them from there! (Please note, the "now playing" command reads from ID3 tags, so these will need to be filled out for that command to pull information. I suggest using [mutagen](https://mutagen.readthedocs.io/) for this)
+To import your songs, it's simple! Put all your music into a folder called `songs` in the same directory as the program, and it'll automatically read them from there! (Please note, the "now playing" command reads from ID3 tags, so these will need to be filled out for that command to pull information)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
