@@ -55,7 +55,7 @@ async def on_ready():
     global Tune
     try:
         Vc = await stage.connect()
-        member = guild.me
+        member = stage.guild.me
         await member.edit(suppress=False)
     except CommandInvokeError:
         pass
