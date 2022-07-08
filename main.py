@@ -2,8 +2,13 @@
 import asyncio
 import json
 import logging
+from keep_alive import keep_alive
+#PyNaCl#
 import os
+import random
+import time
 import discord
+import eyed3
 from mutagen.easyid3 import EasyID3
 from discord.ext import commands
 from discord.ext.commands.errors import CommandInvokeError
@@ -110,5 +115,5 @@ async def nowplaying(ctx):
             pass
         await ctx.reply(embed=embed)
 
-
-bot.run(config.TOKEN, reconnect=True)
+keep_alive()
+bot.run(os.getenv("TOKEN"), reconnect=True)
