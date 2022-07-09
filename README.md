@@ -26,31 +26,31 @@ Replit Console:
 ```
 pip install --upgrade pip
 pip install -r requirements.txt
+python main.py
 ```
 
-After that, you're good to begin configuration!
-
-## Configuration
-To configure your bot, make a copy of `config.json.example`, and fill in the information there.
-
-- `botid` = The USER_ID of your bot
-- `volume` = The volume that the bot will play at (from 0 - 1 as a float/decimal), **NOTE: It's at 0.2 by default for a reason, anything above that REALLY hurt**
-- `stagename` = The name of the stage channel you wish for the bot to join. **NOTE: this is CaSe sensitive**
-- `prefix` = Your chosen bot prefix for both
-
-To further configure your bot (optional) make a copy of `albumart.json.example`, and fill in the information with the supplied ones as a guide:
+- `BOTID` = The USER_ID of your bot
+- `VOLUME` = The volume that the bot will play at (from 0 - 1 as a float/decimal), **NOTE: It's at 0.2 by default for a reason, anything above that REALLY hurt**
+- `STAGENAME` = The name of the stage channel you wish for the bot to join. **NOTE: this is CaSe sensitive**
+- `PREFIX` = Your chosen bot prefix for both
 
 ## Environment
 - `TOKEN` = Your bot token from https://discord.com/developers/applications
 - `MOD_ROLE` = The name of the role you wish to allow to run `join` or `close`. **NOTE: this is CaSe sensitive**
 - `GUILD_IDS` = The ID of the server your bot is running in, I know it's a list, but it just needs to be an INT in the list (Bot only runs in 1 server at this moment in time
 
+
+## Configuration
+After that, you're good to begin configuration!
+To configure your bot, make a copy of `config.json.example`, and fill in the information there.
+To further configure your bot (optional) make a copy of `albumart.json.example`, and fill in the information with the supplied ones as a guide:
 ```json
 {
     "album_name":"Link to album art",
     "album_name":"Link to album art"
 }
 ```
+
 **WHEN INVITING THE BOT**
 Ensure the bot has both `bot` scopes AND all [Privileged Gateway Intents](https://discord.com/developers/docs/topics/gateway#gateway-intents)
 
