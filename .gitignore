@@ -5,6 +5,3 @@ config.json
 albumart.json
 songs.txt
 /.vscode
-*.pyc
-main.log
-*.env
