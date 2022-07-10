@@ -35,7 +35,7 @@ bot = commands.Bot(
 async def on_ready():
     global save_guild
     if not os.path.exists("./songs"):
-        logging.WARNING(
+        logging.warning(
             'Unable to find "songs" directory. Please ensure there is a "songs" directory present at the same level as this file'
         )
         return
@@ -96,11 +96,11 @@ async def nowplaying(ctx):
     else:
         song_info = get_info.info(Tune)
         embed = discord.Embed(color=0xC0F207)
-        embed.set_author(name="Now Playing 🎶", icon_url=ctx.guild.icon.url).add_field(
+        embed.set_author(name="Now Playing 🎶", icon_url=ctx.guild.icon_url).add_field(
             name="Playing", value=f"{song_info[1]} - {song_info[0]}", inline=False
         ).set_footer(
             text="This bot is still in development, if you have any queries, please contact the owner",
-            icon_url=(ctx.message.author.avatar.url),
+            icon_url=(ctx.message.author.avatar_url),
         )
         if song_info[2] is not None:
             embed.add_field(name="Album", value=f"{song_info[2]}", inline=True)
