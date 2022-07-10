@@ -5,7 +5,7 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/BritishBenji/StageMusicBot)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![wakatime](https://wakatime.com/badge/github/BritishBenji/StageMusicBot.svg)](https://wakatime.com/badge/github/BritishBenji/StageMusicBot)
-
+[![Run on Replit](https://replit.com/badge/github/golgrax/StageMusicBot)](https://replit.com/github/Golgrax/StageMusicBot)
 This bot is made to sit in a Stage Channel, and play music from your local machine 24/7, simple as that!
 
 ## How to Install: 
