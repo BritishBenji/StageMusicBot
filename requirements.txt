@@ -1,8 +1,7 @@
-PyNaCl
+PyNaCl ~= 1.5.0
 ffmpeg
-mutagen
+mutagen ~= 1.45.1
 flask
-discord
 config
 eyed3
 git+https://github.com/Rapptz/discord.py#egg=discord.py[voice]
