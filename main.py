@@ -3,12 +3,16 @@ import asyncio
 import json
 import logging
 import os
+import random
+import eyed3
+import time
 import discord
 from mutagen.easyid3 import EasyID3
 from discord.ext import commands
 from discord.ext.commands.errors import CommandInvokeError
 from src import get_info
 import config
+from keep_alive import keep_alive
 
 logging.basicConfig(level=logging.WARNING, filename="main.log", filemode="w")
 
@@ -31,7 +35,7 @@ bot = commands.Bot(
 async def on_ready():
     global save_guild
     if not os.path.exists("./songs"):
-        logging.WARNING(
+        logging.warning(
             'Unable to find "songs" directory. Please ensure there is a "songs" directory present at the same level as this file'
         )
         return
@@ -50,7 +54,7 @@ async def on_ready():
     global Tune
     try:
         Vc = await stage.connect()
-        member = guild.me
+        member = stage.guild.me
         await member.edit(suppress=False)
     except CommandInvokeError:
         pass
@@ -92,11 +96,11 @@ async def nowplaying(ctx):
     else:
         song_info = get_info.info(Tune)
         embed = discord.Embed(color=0xC0F207)
-        embed.set_author(name="Now Playing 🎶", icon_url=ctx.guild.icon.url).add_field(
+        embed.set_author(name="Now Playing 🎶", icon_url=ctx.guild.icon_url).add_field(
             name="Playing", value=f"{song_info[1]} - {song_info[0]}", inline=False
         ).set_footer(
             text="This bot is still in development, if you have any queries, please contact the owner",
-            icon_url=(ctx.message.author.avatar.url),
+            icon_url=(ctx.message.author.avatar_url),
         )
         if song_info[2] is not None:
             embed.add_field(name="Album", value=f"{song_info[2]}", inline=True)
@@ -111,4 +115,6 @@ async def nowplaying(ctx):
         await ctx.reply(embed=embed)
 
 
-bot.run(config.TOKEN, reconnect=True)
+
+keep_alive()
+bot.run(os.getenv("TOKEN"), reconnect=True)
