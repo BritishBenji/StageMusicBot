@@ -8,6 +8,8 @@
 
 This bot is made to sit in a Stage Channel, and play music from your local machine 24/7, simple as that!
 
+Looking to run this on replit? Check the [replit branch](https://github.com/BritishBenji/StageMusicBot/tree/replit)!
+
 ## How to Install: 
 
 Please try to follow these instructions first, if find that there is something you are unsure on, feel free to contact me on Discord (https://discord.gg/qBq2WSsgvv) or open an issue, and I'll be more than happy to help.
@@ -46,12 +48,6 @@ To further configure your bot (optional) make a copy of `albumart.json.example`,
 
 **WHEN INVITING THE BOT**
 Ensure the bot has both `bot` scopes AND all [Privileged Gateway Intents](https://discord.com/developers/docs/topics/gateway#gateway-intents)
-
-### Edit `main.py` - 
-
-**LINUX USERS:**
-
-You may need to edit `main.py` to fit your operating system's directories. *(This may just be a case of swapping backslashes for forward slashes in certain cases)*
 
 ### Import your songs
 
