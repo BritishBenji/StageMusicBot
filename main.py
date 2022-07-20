@@ -13,6 +13,21 @@ from discord.ext.commands.errors import CommandInvokeError
 from src import get_info
 import config
 from keep_alive import keep_alive
+from dotenv import load_dotenv
+load_dotenv()
+
+from pathlib import Path
+
+
+
+dotenv_path = Path('path/to/.env')
+load_dotenv(dotenv_path=dotenv_path)
+
+os.getenv('TOKEN')
+os.getenv('MOD_ROLE')
+os.getenv('GUILD_IDS')
+
+
 
 logging.basicConfig(level=logging.WARNING, filename="main.log", filemode="w")
 
