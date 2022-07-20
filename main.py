@@ -13,6 +13,7 @@ from discord.ext.commands.errors import CommandInvokeError
 from src import get_info
 import config
 from keep_alive import keep_alive
+from dotenv import load_dotenv
 load_dotenv()
 
 from pathlib import Path
