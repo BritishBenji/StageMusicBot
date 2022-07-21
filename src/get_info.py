@@ -1,8 +1,4 @@
-from discord.ext import commands
-from mutagen.id3 import ID3
-import mutagen
-import random
-import os
+import mutagen, random, os
 
 
 def info(Tune):
