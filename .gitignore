@@ -8,5 +8,5 @@ songs.txt
 *.pyc
 main.log
 .venv
-config.py
+
 *.opus
