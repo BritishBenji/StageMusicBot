@@ -1,11 +1,8 @@
-from discord.ext import commands
-from mutagen.easyid3 import EasyID3
-import random
-import os
+import mutagen, random, os
 
 
 def info(Tune):
-    audiofile = EasyID3(f"songs/{Tune}")
+    audiofile = mutagen.File(f"songs/{Tune}")
     artist = audiofile["artist"][0]
     title = audiofile["title"][0]
     try:
