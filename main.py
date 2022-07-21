@@ -1,17 +1,10 @@
 # StageMusicBot - https://discord.gg/qBq2WSsgvv
-import asyncio
-import json
-import logging
-import os
-import discord
-from mutagen.easyid3 import EasyID3
+import asyncio, json, logging, os, discord, config, mutagen
 from discord.ext import commands
 from discord.ext.commands.errors import CommandInvokeError
 from src import get_info
-import config
 
-logging.basicConfig(level=logging.WARNING, filename="main.log", filemode="w")
-
+logging.basicConfig(level=logging.WARN, filemode="w")
 guilds = []
 directory = os.getcwd()
 
@@ -31,11 +24,11 @@ bot = commands.Bot(
 async def on_ready():
     global save_guild
     if not os.path.exists("./songs"):
-        logging.WARNING(
+        logging.warning(
             'Unable to find "songs" directory. Please ensure there is a "songs" directory present at the same level as this file'
         )
         return
-    logging.warning(f"{bot.user} has connected to Discord!")
+    logging.info(f"{bot.user} has connected to Discord!")
     while len(guilds) < 1:
         async for guild in bot.fetch_guilds(limit=5):
             save_guild = guild
@@ -61,7 +54,7 @@ async def on_ready():
             Tune = get_info.write_song()
             Vc.play(discord.FFmpegPCMAudio(f"songs/{Tune}"))
             Vc.cleanup()
-            audiofile = EasyID3(f"songs/{Tune}")
+            audiofile = mutagen.File(f"songs/{Tune}")
             title = audiofile["title"][0]
             await bot.change_presence(activity=discord.Game(name=f"{title}"))
             Vc.source = discord.PCMVolumeTransformer(Vc.source, volume=config.VOLUME)
@@ -69,6 +62,17 @@ async def on_ready():
                 pass
             else:
                 await member.edit(suppress=False)
+
+
+@bot.event
+async def on_voice_state_update(name, past, current):
+    if current.channel == None and name.name == bot.user.id:
+        logging.warning("Shutting down due to disconnect")
+        logging.shutdown()
+        await bot.close()
+    else:
+        # In this situation, the bot MAY still be disconnected, however I'm not sure on the fix for that unless I rewrite this first. It's a massive mess, but so far, an improvement
+        pass
 
 
 @bot.command(name="close")

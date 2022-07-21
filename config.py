@@ -1,7 +1,0 @@
-TOKEN = ""
-PREFIX = "*"
-BOTID = ""
-STAGENAME = ""
-MODROLE = ""
-VOLUME = 0.2
-GUILDIDS = []

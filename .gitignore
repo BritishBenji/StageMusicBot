@@ -7,3 +7,6 @@ songs.txt
 /.vscode
 *.pyc
 main.log
+.venv
+config.py
+*.opus
