@@ -3,10 +3,10 @@ import mutagen, random, os
 
 def info(Tune):
     audiofile = mutagen.File(f"songs/{Tune}")
-    artist = audiofile["artist"][0]
-    title = audiofile["title"][0]
+    artist = audiofile.get("artist")[0]
+    title = audiofile.get("title")[0]
     try:
-        album = audiofile["album"][0]
+        album = audiofile.get("album")[0]
     except KeyError:
         album = None
     return [artist, title, album]

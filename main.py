@@ -55,7 +55,7 @@ async def on_ready():
             Vc.play(discord.FFmpegPCMAudio(f"songs/{Tune}"))
             Vc.cleanup()
             audiofile = mutagen.File(f"songs/{Tune}")
-            title = audiofile["title"][0]
+            title = audiofile.get("title")[0]
             await bot.change_presence(activity=discord.Game(name=f"{title}"))
             Vc.source = discord.PCMVolumeTransformer(Vc.source, volume=config.VOLUME)
             if "suppress=False" in str(stage.voice_states):
