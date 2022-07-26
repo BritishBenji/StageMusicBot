@@ -6,15 +6,15 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![wakatime](https://wakatime.com/badge/github/BritishBenji/StageMusicBot.svg)](https://wakatime.com/badge/github/BritishBenji/StageMusicBot)
 
-This bot is made to sit in a Stage Channel, and play music from your local machine 24/7, simple as that!
+This bot is made to sit on a Stage Channel, and play music from your local machine 24/7, simple as that!
 
 Looking to run this on replit? Check the [replit branch](https://github.com/BritishBenji/StageMusicBot/tree/replit)!
 
 ## How to Install: 
 
-Please try to follow these instructions first, if find that there is something you are unsure on, feel free to contact me on Discord (https://discord.gg/qBq2WSsgvv) or open an issue, and I'll be more than happy to help.
+Please try to follow these instructions first, if find that there is something you are unsure about, feel free to contact me on Discord (https://discord.gg/qBq2WSsgvv) or open an issue, and I'll be more than happy to help.
 
-There are a few requirements needed before you can run this bot, run the command below to install these pre-requisits:
+There are a few requirements needed before you can run this bot, run the command below to install these pre-requisites:
 
 Windows:
 ```
@@ -54,4 +54,4 @@ Ensure the bot has both `bot` scopes AND all [Privileged Gateway Intents](https:
 To import your songs, it's simple! Put all your music into a folder called `songs` in the same directory as the program, and it'll automatically read them from there! (Please note, the "now playing" command reads from ID3 tags, so these will need to be filled out for that command to pull information. I suggest using [mutagen](https://mutagen.readthedocs.io/) for this)
 
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Pull requests are welcome. For the majority of changes, please open an issue the first to discuss what you would like to change.
