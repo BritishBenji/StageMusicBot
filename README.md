@@ -54,4 +54,4 @@ Ensure the bot has both `bot` scopes AND all [Privileged Gateway Intents](https:
 To import your songs, it's simple! Put all your music into a folder called `songs` in the same directory as the program, and it'll automatically read them from there! (Please note, the "now playing" command reads from ID3 tags, so these will need to be filled out for that command to pull information. I suggest using [mutagen](https://mutagen.readthedocs.io/) for this)
 
 ## Contributing
-Pull requests are welcome. For the majority of changes, please open an issue the first to discuss what you would like to change.
+Pull requests are welcome. For major changes, please open an issue the first to discuss what you would like to change.
