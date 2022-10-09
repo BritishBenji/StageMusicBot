@@ -1,11 +1,14 @@
 # StageMusicBot
 
+[![Run on Replit](https://replit.com/badge/github/golgrax/StageMusicBot)](https://replit.com/github/Golgrax/StageMusicBot)
+
 [![Python version](https://img.shields.io/badge/python-3.9-blue.svg)](https://python.org)
 ![GitHub Repo stars](https://img.shields.io/github/stars/BritishBenji/StageMusicBot)
 ![GitHub last commit](https://img.shields.io/github/last-commit/BritishBenji/StageMusicBot)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![wakatime](https://wakatime.com/badge/github/BritishBenji/StageMusicBot.svg)](https://wakatime.com/badge/github/BritishBenji/StageMusicBot)
-[![Run on Replit](https://replit.com/badge/github/golgrax/StageMusicBot)](https://replit.com/github/Golgrax/StageMusicBot)
+
+
 This bot is made to sit in a Stage Channel, and play music from your local machine 24/7, simple as that!
 
 ## How to Install: 
@@ -14,14 +17,6 @@ Please try to follow these instructions first, if find that there is something y
 
 There are a few requirements needed before you can run this bot, run the command below to install these pre-requisits:
 
-Windows:
-```
-py -m pip install -r requirements.txt
-```
-Linux:
-```
-python3 -m pip install -r requirements.txt
-```
 Replit Console:
 ```
 pip install --upgrade pip
@@ -38,7 +33,8 @@ python main.py
 - `TOKEN` = Your bot token from https://discord.com/developers/applications
 - `MOD_ROLE` = The name of the role you wish to allow to run `join` or `close`. **NOTE: this is CaSe sensitive**
 - `GUILD_IDS` = The ID of the server your bot is running in, I know it's a list, but it just needs to be an INT in the list (Bot only runs in 1 server at this moment in time
-
+## Replit Nix
+- https://how-to.repl.co/nix
 
 ## Configuration
 After that, you're good to begin configuration!
