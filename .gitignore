@@ -2,3 +2,4 @@
 Token.txt
 /.vscode
 *.pyc
+/__pycache__
