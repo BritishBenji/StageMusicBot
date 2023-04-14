@@ -4,7 +4,6 @@ import json
 import logging
 import os
 import random
-import eyed3
 import time
 import discord
 from mutagen.easyid3 import EasyID3
