@@ -1,17 +1,10 @@
 # StageMusicBot - https://discord.gg/qBq2WSsgvv
-import asyncio
-import json
-import logging
-import os
-import random
-import eyed3
-import time
-import discord
-from mutagen.easyid3 import EasyID3
+import asyncio, json, logging, os, discord, config, mutagen
 from discord.ext import commands
 from discord.ext.commands.errors import CommandInvokeError
 from src import get_info
-import config
+
+
 from keep_alive import keep_alive
 from dotenv import load_dotenv
 load_dotenv()
@@ -25,8 +18,6 @@ load_dotenv(dotenv_path=dotenv_path)
 os.getenv('TOKEN')
 os.getenv('MOD_ROLE')
 os.getenv('GUILD_IDS')
-
-
 
 logging.basicConfig(level=logging.WARNING, filename="main.log", filemode="w")
 
@@ -79,7 +70,7 @@ async def on_ready():
             Tune = get_info.write_song()
             Vc.play(discord.FFmpegPCMAudio(f"songs/{Tune}"))
             Vc.cleanup()
-            audiofile = EasyID3(f"songs/{Tune}")
+            audiofile = mutagen.File(f"songs/{Tune}")
             title = audiofile["title"][0]
             await bot.change_presence(activity=discord.Game(name=f"{title}"))
             Vc.source = discord.PCMVolumeTransformer(Vc.source, volume=config.VOLUME)
@@ -87,6 +78,17 @@ async def on_ready():
                 pass
             else:
                 await member.edit(suppress=False)
+
+
+@bot.event
+async def on_voice_state_update(name, past, current):
+    if current.channel == None and name.name == bot.user.id:
+        logging.warning("Shutting down due to disconnect")
+        logging.shutdown()
+        await bot.close()
+    else:
+        # In this situation, the bot MAY still be disconnected, however I'm not sure on the fix for that unless I rewrite this first. It's a massive mess, but so far, an improvement
+        pass
 
 
 @bot.command(name="close")
