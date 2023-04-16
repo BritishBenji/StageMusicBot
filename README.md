@@ -33,7 +33,8 @@ python main.py
 - `TOKEN` = Your bot token from https://discord.com/developers/applications
 - `MOD_ROLE` = The name of the role you wish to allow to run `join` or `close`. **NOTE: this is CaSe sensitive**
 - `GUILD_IDS` = The ID of the server your bot is running in, I know it's a list, but it just needs to be an INT in the list (Bot only runs in 1 server at this moment in time
-
+## Replit Nix
+- https://how-to.repl.co/nix
 
 ## Configuration
 After that, you're good to begin configuration!

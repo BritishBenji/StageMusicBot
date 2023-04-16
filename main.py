@@ -11,6 +11,7 @@ load_dotenv()
 
 from pathlib import Path
 
+
 dotenv_path = Path('path/to/.env')
 load_dotenv(dotenv_path=dotenv_path)
 
@@ -111,11 +112,11 @@ async def nowplaying(ctx):
     else:
         song_info = get_info.info(Tune)
         embed = discord.Embed(color=0xC0F207)
-        embed.set_author(name="Now Playing 🎶", icon_url=ctx.guild.icon_url).add_field(
+        embed.set_author(name="Now Playing 🎶", icon_url=ctx.guild.icon.url).add_field(
             name="Playing", value=f"{song_info[1]} - {song_info[0]}", inline=False
         ).set_footer(
             text="This bot is still in development, if you have any queries, please contact the owner",
-            icon_url=(ctx.message.author.avatar_url),
+            icon_url=(ctx.message.author.avatar.url),
         )
         if song_info[2] is not None:
             embed.add_field(name="Album", value=f"{song_info[2]}", inline=True)
@@ -128,7 +129,6 @@ async def nowplaying(ctx):
         else:
             pass
         await ctx.reply(embed=embed)
-
 
 
 keep_alive()

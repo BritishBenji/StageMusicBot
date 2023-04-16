@@ -1,4 +1,5 @@
 # Custom User-Added Files
 /.vscode
 *.pyc
+/__pycache__
 
