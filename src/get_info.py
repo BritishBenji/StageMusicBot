@@ -1,14 +1,14 @@
 import mutagen, random, os
 
+from mutagen.easyid3 import EasyID3
+from mutagen.mp3 import MP3
+
 
 def info(Tune):
-    audiofile = mutagen.File(f"songs/{Tune}")
-    artist = audiofile.get("artist")[0]
-    title = audiofile.get("title")[0]
-    try:
-        album = audiofile.get("album")[0]
-    except KeyError:
-        album = None
+    audiofile = MP3(f"songs/{Tune}", ID3=EasyID3)
+    album = audiofile["album"][0]
+    title = audiofile["title"][0]
+    artist = audiofile["performer"][0]
     return [artist, title, album]
 
 
