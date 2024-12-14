@@ -1,8 +1,10 @@
 # StageMusicBot - https://discord.gg/qBq2WSsgvv
-import asyncio, json, logging, os, discord, config, mutagen
+import asyncio, json, logging, os, discord, config
 from discord.ext import commands
 from discord.ext.commands.errors import CommandInvokeError
 from src import get_info
+from mutagen.easyid3 import EasyID3
+from mutagen.mp3 import MP3
 
 logging.basicConfig(level=logging.WARN, filemode="w")
 guilds = []
@@ -54,14 +56,15 @@ async def on_ready():
             Tune = get_info.write_song()
             Vc.play(discord.FFmpegPCMAudio(f"songs/{Tune}"))
             Vc.cleanup()
-            audiofile = mutagen.File(f"songs/{Tune}")
-            title = audiofile.get("title")[0]
+            audiofile = MP3(f"songs/{Tune}", ID3=EasyID3)
+            title = audiofile["title"]
             await bot.change_presence(activity=discord.Game(name=f"{title}"))
             Vc.source = discord.PCMVolumeTransformer(Vc.source, volume=config.VOLUME)
             if "suppress=False" in str(stage.voice_states):
                 pass
             else:
                 await member.edit(suppress=False)
+    await bot.tree.sync()
 
 
 @bot.event
@@ -82,12 +85,11 @@ async def close(ctx):
     await bot.close()
 
 
-@bot.command(
+@bot.tree.command(
     name="nowplaying",
     description="Command to check what song is currently playing",
-    aliases=["np"],
 )
-async def nowplaying(ctx):
+async def nowplaying(ctx: discord.Interaction):
     try:
         if not Vc.is_playing():
             await ctx.reply("I need to play something first")
@@ -100,7 +102,6 @@ async def nowplaying(ctx):
             name="Playing", value=f"{song_info[1]} - {song_info[0]}", inline=False
         ).set_footer(
             text="This bot is still in development, if you have any queries, please contact the owner",
-            icon_url=(ctx.message.author.avatar.url),
         )
         if song_info[2] is not None:
             embed.add_field(name="Album", value=f"{song_info[2]}", inline=True)
@@ -112,7 +113,7 @@ async def nowplaying(ctx):
                     pass
         else:
             pass
-        await ctx.reply(embed=embed)
+        await ctx.response.send_message(embed=embed)
 
 
 bot.run(config.TOKEN, reconnect=True)
