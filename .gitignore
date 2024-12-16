@@ -10,3 +10,4 @@ main.log
 .venv
 test.py
 *.opus
+config.py
