@@ -92,9 +92,9 @@ async def close(ctx):
 async def nowplaying(ctx: discord.Interaction):
     try:
         if not Vc.is_playing():
-            await ctx.reply("I need to play something first")
+            await ctx.response.send_message("I need to play something first")
     except:
-        await ctx.reply("I need to play something first")
+        await ctx.response.send_message("I need to play something first")
     else:
         song_info = get_info.info(Tune)
         embed = discord.Embed(color=0xC0F207)
